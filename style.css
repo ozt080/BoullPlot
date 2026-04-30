@@ -1,17 +1,18 @@
 body { 
     margin: 0; 
     background: #2c3e50; 
-    color: white; 
-    font-family: sans-serif; 
-    text-align: center;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
     overflow: hidden;
-    touch-action: none; /* Important pour jouer sur iPhone */
+    touch-action: none;
 }
-#ui h1 { font-size: 20px; margin: 10px 0; color: #f1c40f; }
+
 canvas { 
-    background: skyblue; 
-    border: 3px solid #fff; 
-    border-radius: 15px; 
-    max-width: 95%; 
-    height: auto;
+    /* Dégradé pour faire le ciel et l'herbe */
+    background: linear-gradient(to bottom, #4facfe 0%, #00f2fe 70%, #6ab04c 70%, #2ecc71 100%); 
+    border: 5px solid #fff; 
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    max-width: 95vw;
 }
