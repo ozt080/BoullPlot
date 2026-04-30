@@ -53,69 +53,64 @@ canvas.addEventListener('touchstart', (e) => {
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // 1. Dessiner les seaux (Papa Pear Style)
+    // 1. Dessiner les seaux avec des yeux (Papa Pear Style)
     buckets.forEach(b => {
+        // Le corps du seau
         ctx.fillStyle = b.color;
-        ctx.fillRect(b.x, canvas.height - 40, b.w, 40);
+        ctx.beginPath();
+        ctx.roundRect(b.x + 5, canvas.height - 60, b.w - 10, 50, 10);
+        ctx.fill();
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Les Yeux
         ctx.fillStyle = "white";
-        ctx.font = "bold 12px Arial";
-        ctx.fillText(b.label, b.x + 20, canvas.height - 15);
+        ctx.beginPath();
+        ctx.arc(b.x + 25, canvas.height - 45, 5, 0, Math.PI*2);
+        ctx.arc(b.x + 45, canvas.height - 45, 5, 0, Math.PI*2);
+        ctx.fill();
+        ctx.fillStyle = "black";
+        ctx.beginPath();
+        ctx.arc(b.x + 25, canvas.height - 45, 2, 0, Math.PI*2);
+        ctx.arc(b.x + 45, canvas.height - 45, 2, 0, Math.PI*2);
+        ctx.fill();
+        
+        // Le score au dessus
+        ctx.fillStyle = "white";
+        ctx.font = "bold 10px Arial";
+        ctx.fillText(b.label, b.x + 22, canvas.height - 10);
     });
 
-    // 2. Dessiner les plots (ils disparaissent si touchés)
+    // 2. Dessiner les obstacles (Pegs)
     pegs.forEach(p => {
         if (p.active) {
+            // Dessin d'un plot orange avec un contour
             ctx.beginPath();
             ctx.arc(p.x, p.y, p.radius, 0, Math.PI*2);
-            ctx.fillStyle = "#e67e22";
+            ctx.fillStyle = "#e67e22"; // Orange
             ctx.fill();
-            ctx.strokeStyle = "white";
+            ctx.strokeStyle = "#d35400";
             ctx.stroke();
-            ctx.closePath();
+            // Petit reflet blanc sur le plot
+            ctx.beginPath();
+            ctx.arc(p.x - 3, p.y - 3, 2, 0, Math.PI*2);
+            ctx.fillStyle = "rgba(255,255,255,0.5)";
+            ctx.fill();
         }
     });
 
-    // 3. Gérer les balles
+    // 3. Gérer les billes et les rebonds (Garde le reste de ton code ici...)
     balls.forEach((b, index) => {
-        b.vy += 0.2; // Gravité
-        b.x += b.vx;
-        b.y += b.vy;
-
-        // Rebond murs
-        if (b.x < 0 || b.x > canvas.width) b.vx *= -1;
-
-        // Collision plots
-        pegs.forEach(p => {
-            if (p.active) {
-                let dx = b.x - p.x;
-                let dy = b.y - p.y;
-                let dist = Math.sqrt(dx*dx + dy*dy);
-                if (dist < b.radius + p.radius) {
-                    b.vy *= -0.7;
-                    b.vx += dx * 0.1;
-                    p.active = false; // Le plot disparaît !
-                    score += 10;
-                }
-            }
-        });
-
-        // Tomber dans un seau
-        if (b.y > canvas.height - 40) {
-            balls.splice(index, 1);
-            // On pourrait ajouter du score ici selon le seau
-        }
-
+        // ... (ton code de mouvement actuel) ...
+        
+        // Dessin de la bille (Papa Pear est une poire, ici on fait une bille dorée)
         ctx.beginPath();
         ctx.arc(b.x, b.y, b.radius, 0, Math.PI*2);
-        ctx.fillStyle = "#f39c12"; // Balle dorée
+        ctx.fillStyle = "#f1c40f";
         ctx.fill();
-        ctx.closePath();
+        ctx.stroke();
     });
-
-    // Score
-    ctx.fillStyle = "black";
-    ctx.font = "bold 20px Arial";
-    ctx.fillText("Score: " + score, 10, 30);
 
     requestAnimationFrame(draw);
 }
