@@ -1,0 +1,17 @@
+body { 
+    margin: 0; 
+    background: #2c3e50; 
+    color: white; 
+    font-family: sans-serif; 
+    text-align: center;
+    overflow: hidden;
+    touch-action: none; /* Important pour jouer sur iPhone */
+}
+#ui h1 { font-size: 20px; margin: 10px 0; color: #f1c40f; }
+canvas { 
+    background: skyblue; 
+    border: 3px solid #fff; 
+    border-radius: 15px; 
+    max-width: 95%; 
+    height: auto;
+}
